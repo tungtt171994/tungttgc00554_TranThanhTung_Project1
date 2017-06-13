@@ -1,61 +1,105 @@
 package com.sms.Panel;
 
+import com.sms.FileIO.FileManager;
 import com.sms.FileIO.Sort;
-import com.sms.Frame.CustomerEdit;
+import com.sms.Frame.CustomerAdd;
+import com.sms.Frame.MainGUI;
 import com.sms.Physical.Customer;
 import com.sms.Physical.Entity;
+import com.sms.Physical.Order;
 import com.sms.Physical.Product;
 import java.awt.Rectangle;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.EventListenerList;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class CustomerPanelManager extends javax.swing.JPanel {
 
     public Entity ett;
     
-    private String[] columns =  new String [] {
-                "Code", "Name", "Phone"
-            };
-    
-    public CustomerPanelManager(Entity entities) {
+    private String[] columns =  new String [] 
+    {
+        "Code",
+        "Name",
+        "Phone"
+    };
+    public CustomerPanelManager()
+    {
+    }
+    public CustomerPanelManager(Entity entity) {
         initComponents();
-        this.ett = entities;
+        this.ett = entity;
         loadDataTab();
+        
     }
     //This function get Data to Table
     public void loadDataTab() {
-        
-        if(ett.customers.size() == 0)
-            return;
-        
-        Object[][] arrData = new Object[ett.customers.size()][columns.length];
-        
-        for(int i = 0 ;i < ett.customers.size();i++){
-            Customer product = ett.customers.get(i);
-            arrData[i][0] = product.ccode;
-            arrData[i][1] = product.cus_name;
-            arrData[i][2] = product.phone;
-        }
-        
-         tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
-            arrData,
-           columns
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+    if(ett.customers.size() == 0)
+        return;
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+    Object[][] arrData = new Object[ett.customers.size()][columns.length];
+
+    for(int i = 0 ;i < ett.customers.size();i++)
+    {
+        Customer product = ett.customers.get(i);
+        arrData[i][0] = product.ccode;
+        arrData[i][1] = product.cus_name;
+        arrData[i][2] = product.phone;
     }
+
+     tblCustomer.setModel(new javax.swing.table.DefaultTableModel(arrData, columns)
+     {
+        Class[] types = new Class [] 
+        {
+            java.lang.String.class,
+            java.lang.String.class,
+            java.lang.String.class
+        };
+        boolean[] canEdit = new boolean [] {
+            true, 
+            true,
+            true
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return canEdit [columnIndex];
+        }
+//        public void tableChanged(TableModelEvent e){
+//            int row = e.getFirstRow();
+//            int col = e.getColumn();
+////            if (col == 0) {
+////                Vector newValue = new Vector();
+////                newValue.add((String) tableModel.getValueAt(row, 0));
+////                String colName[] = { (String) tableModel.getColumnName(0) };
+////                Vector valueWhere = new Vector();
+////                valueWhere.add((String) tableModel.getValueAt(row, 1));
+////                String colsWhere[] = { (String) tableModel.getColumnName(1) }; 
+////                System.out.println("col = " + colName[0] + "value = "
+////                        + newValue.get(0) + " colw = " + colsWhere[0]
+////                        + " valuew = " + valueWhere.get(0));
+////            }
+//            
+//        }
+    });
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,27 +111,20 @@ public class CustomerPanelManager extends javax.swing.JPanel {
     private void initComponents() {
 
         btnAdd = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
         txtSreachByCcode = new javax.swing.JTextField();
         btnSearch_By_CCode = new javax.swing.JButton();
         btnRemove_By_Ccode = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCustomer = new javax.swing.JTable();
         btnSort = new javax.swing.JButton();
+        btnOpen = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
 
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_add.png"))); // NOI18N
-        btnAdd.setText("Add");
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/s_add.png"))); // NOI18N
+        btnAdd.setText("Add Customer");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
-            }
-        });
-
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/edit.png"))); // NOI18N
-        btnEdit.setText("Edit");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
             }
         });
 
@@ -97,7 +134,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
             }
         });
 
-        btnSearch_By_CCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_search.png"))); // NOI18N
+        btnSearch_By_CCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/s_search.png"))); // NOI18N
         btnSearch_By_CCode.setText("Search Customer");
         btnSearch_By_CCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +142,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
             }
         });
 
-        btnRemove_By_Ccode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/erase.png"))); // NOI18N
+        btnRemove_By_Ccode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/erase.png"))); // NOI18N
         btnRemove_By_Ccode.setText("Delete Customer");
         btnRemove_By_Ccode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,6 +178,8 @@ public class CustomerPanelManager extends javax.swing.JPanel {
         });
         tblCustomer.setEditingRow(1);
         tblCustomer.setName(""); // NOI18N
+        tblCustomer.setSelectionBackground(new java.awt.Color(153, 153, 255));
+        tblCustomer.setSelectionForeground(new java.awt.Color(0, 0, 0));
         jScrollPane1.setViewportView(tblCustomer);
         if (tblCustomer.getColumnModel().getColumnCount() > 0) {
             tblCustomer.getColumnModel().getColumn(0).setResizable(false);
@@ -148,11 +187,27 @@ public class CustomerPanelManager extends javax.swing.JPanel {
             tblCustomer.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        btnSort.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/down_alt.png"))); // NOI18N
-        btnSort.setText("Sort List Customer");
+        btnSort.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/down_alt.png"))); // NOI18N
+        btnSort.setText("Sort List");
         btnSort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSortActionPerformed(evt);
+            }
+        });
+
+        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/folder.png"))); // NOI18N
+        btnOpen.setText("Open Data");
+        btnOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenActionPerformed(evt);
+            }
+        });
+
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/s_product.png"))); // NOI18N
+        btnSave.setText("Save Data");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
             }
         });
 
@@ -164,18 +219,20 @@ public class CustomerPanelManager extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtSreachByCcode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSreachByCcode, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSearch_By_CCode, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(btnSearch_By_CCode, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRemove_By_Ccode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSort)))
+                        .addComponent(btnOpen, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSort, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -183,9 +240,10 @@ public class CustomerPanelManager extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit)
                     .addComponent(btnAdd)
-                    .addComponent(btnSort))
+                    .addComponent(btnSort)
+                    .addComponent(btnOpen)
+                    .addComponent(btnSave))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -201,7 +259,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         //Add new Customer
-        CustomerEdit editor = new CustomerEdit(this);
+        CustomerAdd editor = new CustomerAdd(this);
         editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editor.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
@@ -209,14 +267,6 @@ public class CustomerPanelManager extends javax.swing.JPanel {
     private void txtSreachByCcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSreachByCcodeActionPerformed
 
     }//GEN-LAST:event_txtSreachByCcodeActionPerformed
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        //Edit Details Customer
-        int index = tblCustomer.getSelectedRow();        
-        CustomerEdit editor = new CustomerEdit(this, ett.customers.get(index));
-        editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        editor.setVisible(true);
-    }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
         //Sort List Customer
@@ -260,11 +310,47 @@ public class CustomerPanelManager extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnRemove_By_CcodeActionPerformed
 
+    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+           try {
+               ett = FileManager.LoadData(selectedFile.getAbsolutePath());
+           } catch (IOException ex) {
+               Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           if(ett.customers == null)
+           {
+               ett.customers = new ArrayList<Customer>();
+           }
+           loadDataTab();
+            JOptionPane.showMessageDialog(this,"Open Data Customer Success");
+        }
+    }//GEN-LAST:event_btnOpenActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+           try {
+               FileManager.SaveData(fileToSave.getAbsolutePath(), ett);
+           } catch (IOException ex) {
+               Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+           }
+            JOptionPane.showMessageDialog(this,"Save Data Customer Success");
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnOpen;
     private javax.swing.JButton btnRemove_By_Ccode;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch_By_CCode;
     private javax.swing.JButton btnSort;
     private javax.swing.JScrollPane jScrollPane1;
@@ -274,3 +360,13 @@ public class CustomerPanelManager extends javax.swing.JPanel {
 
    
 }
+
+//
+//
+//    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {                                        
+//        //Edit Details Customer
+//        int index = tblCustomer.getSelectedRow();        
+//        CustomerAdd editor = new CustomerAdd(this, ett.customers.get(index));
+//        editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+//        editor.setVisible(true);
+//    }

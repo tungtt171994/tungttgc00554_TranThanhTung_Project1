@@ -45,7 +45,9 @@ public class FileManager {
     //Load File Data
     public static Entity LoadData(String filePath) throws FileNotFoundException{
         Gson gson = new Gson();
-        
+//        Res.getDesktopFile("dsa2017-data/1e2/customers.json");
+//        Res.getDesktopFile("dsa2017-data/1e2/orders.json");
+//        Res.getDesktopFile("dsa2017-data/1e2/products.json");
         Entity result = gson.fromJson(new FileReader(filePath), Entity.class);
         return result;
     }

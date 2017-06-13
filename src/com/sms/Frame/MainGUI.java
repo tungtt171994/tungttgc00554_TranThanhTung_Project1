@@ -8,7 +8,7 @@ import com.sms.Physical.Order;
 import com.sms.Physical.Product;
 import com.sms.Panel.CustomerPanelManager;
 import com.sms.Panel.OrderPanelManager;
-import com.sms.Panel.ProductionPanelManager;
+import com.sms.Panel.ProductPanelManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -83,11 +83,11 @@ public class MainGUI extends javax.swing.JFrame {
         setTitle("Sales Management Systemes");
         setResizable(false);
 
-        mnFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/advanced.png"))); // NOI18N
+        mnFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/advanced.png"))); // NOI18N
         mnFile.setText("File");
 
         btnOpenFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        btnOpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/folder.png"))); // NOI18N
+        btnOpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/folder.png"))); // NOI18N
         btnOpenFile.setText("Open File");
         btnOpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +97,7 @@ public class MainGUI extends javax.swing.JFrame {
         mnFile.add(btnOpenFile);
 
         btnSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_add.png"))); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/s_add.png"))); // NOI18N
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +108,7 @@ public class MainGUI extends javax.swing.JFrame {
         mnFile.add(jSeparator1);
 
         btnExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
-        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_close.png"))); // NOI18N
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/s_close.png"))); // NOI18N
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,11 +119,11 @@ public class MainGUI extends javax.swing.JFrame {
 
         jMenuBar1.add(mnFile);
 
-        mnManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/applications.png"))); // NOI18N
+        mnManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/applications.png"))); // NOI18N
         mnManagement.setText("Manager");
 
         mnitProduct.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        mnitProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/Computer On_1.png"))); // NOI18N
+        mnitProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/Computer On_1.png"))); // NOI18N
         mnitProduct.setText("Production");
         mnitProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,7 +133,7 @@ public class MainGUI extends javax.swing.JFrame {
         mnManagement.add(mnitProduct);
 
         mnitCustomer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        mnitCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/users_1.png"))); // NOI18N
+        mnitCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/users_1.png"))); // NOI18N
         mnitCustomer.setText("Customer");
         mnitCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +143,7 @@ public class MainGUI extends javax.swing.JFrame {
         mnManagement.add(mnitCustomer);
 
         mnitOrder.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        mnitOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/order.png"))); // NOI18N
+        mnitOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/order.png"))); // NOI18N
         mnitOrder.setText("Order");
         mnitOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +188,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void mnitProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitProductActionPerformed
-        addNewPanel(new ProductionPanelManager(entity));
+        addNewPanel(new ProductPanelManager(entity));
     }//GEN-LAST:event_mnitProductActionPerformed
 
     private void mnitCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitCustomerActionPerformed
@@ -196,11 +196,6 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_mnitCustomerActionPerformed
 
     private void mnitOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitOrderActionPerformed
-        
-        if(entity.customers.size() == 0 || entity.products.size() == 0){
-            JOptionPane.showMessageDialog(this,"Product Or Customer Not Exist");
-            return;
-        }
         addNewPanel(new OrderPanelManager(entity));
     }//GEN-LAST:event_mnitOrderActionPerformed
 //Thoát Chương Trình

@@ -18,9 +18,6 @@ public class Helper {
         if(left >= right) {
             return;
         }
-        
-//        System.out.println("size: "+array.size() + " - left: " + left + " - right: " + right);
-
         T pivot = array.get((left + right)/2);
         int index = partition(array, left, right,pivot);
         realQuicksort(array, left, index -1);
@@ -56,14 +53,14 @@ public class Helper {
     
     private static <T> int realBinarysreach(ArrayList<T> array, T fakeDataWithCode, int left, int right){
         
-        System.out.println("size: "+array.size() + " - left: " + left + " - right: " + right);
+        System.out.println("S: "+array.size() + " - L: " + left + " - R: " + right);
          
         if(left > right){
             return -1;
         }
         
         int middle = (left + right)/2;
-        System.out.println("middle: " + middle);
+        System.out.println("M: " + middle);
         int compareResult = ((Comparable)array.get(middle)).compareTo(fakeDataWithCode);
         
         if(compareResult == CompareResult.EQUAL){

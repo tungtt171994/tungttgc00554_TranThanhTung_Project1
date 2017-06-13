@@ -11,7 +11,7 @@ public class Res {
 
 	public static File getDesktopFile(String name)
 	{
-		return new File(System.getProperty("user.dir") + "/Desktop/" + name);
+		return new File(System.getProperty("user.home") + "/Desktop/" + name);
 	}
 
 	public static int code(Object src) 

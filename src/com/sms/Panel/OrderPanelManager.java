@@ -1,27 +1,42 @@
 package com.sms.Panel;
 
+import com.sms.FileIO.FileManager;
+import com.sms.FileIO.Res;
 import com.sms.FileIO.Sort;
-import com.sms.Frame.OrderEdit;
+import com.sms.Frame.MainGUI;
+import com.sms.Frame.OrderAdd;
 import com.sms.Physical.Customer;
 import com.sms.Physical.Entity;
 import com.sms.Physical.Order;
 import com.sms.Physical.Product;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.codehaus.jackson.map.ObjectMapper;
 
 
 public class OrderPanelManager extends javax.swing.JPanel {
 
     public Entity ett;
+
     
-    private String[] columns = new String [] {
-                "Product Code", "Customer Code", "Quantity"
-            };
+    private String[] columns = new String [] 
+    {
+        "Product Code", 
+        "Customer Code", 
+        "Quantity"
+    };
     
     public OrderPanelManager(Entity entity) {
         initComponents();
-        
         this.ett = entity;
-        
         loadDataTab();
     }
     
@@ -43,19 +58,28 @@ public class OrderPanelManager extends javax.swing.JPanel {
             arrData,
             columns
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            Class[] types = new Class []
+            {
+                java.lang.String.class,
+                java.lang.String.class, 
+                java.lang.Integer.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            boolean[] canEdit = new boolean []
+            {
+                false,
+                false,
+                false
             };
 
-            public Class getColumnClass(int columnIndex) {
+            @Override
+            public Class getColumnClass(int columnIndex) 
+            {
                 return types [columnIndex];
             }
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
     }
@@ -69,34 +93,27 @@ public class OrderPanelManager extends javax.swing.JPanel {
     private void initComponents() {
 
         btnSortBy_CCode_PCode = new javax.swing.JButton();
-        btnAdd = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
+        btnAddOrder = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrder = new javax.swing.JTable();
+        btnSave = new javax.swing.JButton();
+        btnOpen = new javax.swing.JButton();
 
         setToolTipText("");
 
-        btnSortBy_CCode_PCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/down_alt.png"))); // NOI18N
-        btnSortBy_CCode_PCode.setText("Sort List Order");
+        btnSortBy_CCode_PCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/down_alt.png"))); // NOI18N
+        btnSortBy_CCode_PCode.setText("Sort");
         btnSortBy_CCode_PCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSortBy_CCode_PCodeActionPerformed(evt);
             }
         });
 
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_add.png"))); // NOI18N
-        btnAdd.setText("Add");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnAddOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/s_add.png"))); // NOI18N
+        btnAddOrder.setText("Add");
+        btnAddOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
-
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/edit.png"))); // NOI18N
-        btnEdit.setText("Edit");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
+                btnAddOrderActionPerformed(evt);
             }
         });
 
@@ -127,6 +144,8 @@ public class OrderPanelManager extends javax.swing.JPanel {
             }
         });
         tblOrder.setEditingRow(1);
+        tblOrder.setSelectionBackground(new java.awt.Color(153, 153, 255));
+        tblOrder.setSelectionForeground(new java.awt.Color(0, 0, 0));
         jScrollPane1.setViewportView(tblOrder);
         if (tblOrder.getColumnModel().getColumnCount() > 0) {
             tblOrder.getColumnModel().getColumn(0).setResizable(false);
@@ -134,42 +153,61 @@ public class OrderPanelManager extends javax.swing.JPanel {
             tblOrder.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/s_product.png"))); // NOI18N
+        btnSave.setText("Save Data");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/folder.png"))); // NOI18N
+        btnOpen.setText("Open Data");
+        btnOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSortBy_CCode_PCode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAddOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSortBy_CCode_PCode, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit)
-                    .addComponent(btnAdd)
-                    .addComponent(btnSortBy_CCode_PCode))
+                    .addComponent(btnAddOrder)
+                    .addComponent(btnSortBy_CCode_PCode)
+                    .addComponent(btnSave)
+                    .addComponent(btnOpen))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void btnAddOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOrderActionPerformed
         //Thêm mới 1 Order
-        OrderEdit editor = new OrderEdit(this);
+        OrderAdd editor = new OrderAdd(this);
         editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editor.setVisible(true);
-    }//GEN-LAST:event_btnAddActionPerformed
+    }//GEN-LAST:event_btnAddOrderActionPerformed
     
     private void btnSortBy_CCode_PCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortBy_CCode_PCodeActionPerformed
         //Sắp xếp List Order By PCode and CCode
@@ -178,20 +216,94 @@ public class OrderPanelManager extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this,"Sorted Success");
     }//GEN-LAST:event_btnSortBy_CCode_PCodeActionPerformed
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        //Xác nhận việc sửa.
-        int index = tblOrder.getSelectedRow();
-        OrderEdit editor = new OrderEdit(this, ett.orders.get(index));
-        editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        editor.setVisible(true);
-    }//GEN-LAST:event_btnEditActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+           try {
+               FileManager.SaveData(fileToSave.getAbsolutePath(), ett);
+           } catch (IOException ex) {
+               Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+           }
+            JOptionPane.showMessageDialog(this,"Save Data Order Success");
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+           try {
+               ett = FileManager.LoadData(selectedFile.getAbsolutePath());
+           } catch (IOException ex) {
+               Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           if(ett.orders == null)
+           {
+               ett.orders = new ArrayList<Order>();
+           }
+           loadDataTab();
+            JOptionPane.showMessageDialog(this,"Open Data Order Success");
+        }
+
+//        try {
+//            File f = Res.getDesktopFile("dsa2017-data/1e2/orders.json");
+//            List<Order> kq = readList(f, Order.class);
+//            for(Order x: kq)
+//                System.out.println(x.pcode + " | " + x.ccode + " | " + x.quantity);
+//        } catch (Exception ex) {
+//            Logger.getLogger(OrderPanelManager.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_btnOpenActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnAddOrder;
+    private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSortBy_CCode_PCode;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblOrder;
     // End of variables declaration//GEN-END:variables
+//	@SuppressWarnings("unchecked")
+//	public static<T1> List<T1> readList(File f,Class<T1> cl) throws Exception
+//	{ 
+//		List<T1> items = new ArrayList<T1>();
+//		
+//		for(Object s: readList(f))
+//		{
+//			Map<String, Object> sjj = (Map<String, Object>)s;
+//			T1 tjj = cl.newInstance();
+//			for(String k: sjj.keySet()) 
+//			{
+//				Object vk = sjj.get(k);
+//				cl.getField(k).set(tjj, vk);
+//			}
+//			
+//			items.add(tjj);
+//		}
+//		
+//		return items;
+//	}
+//        private static<T1> void writeList(File f, List<T1> items) throws Exception 
+//	{
+//		ObjectMapper m = new ObjectMapper();
+//		m.writeValue(f, items);				
+//	}
+//        @SuppressWarnings("unchecked")
+//	private static List<Object> readList(File f) throws Exception
+//	{
+//		ObjectMapper m = new ObjectMapper();
+//		return (List<Object>)m.readValue(f, Object.class);
+//	}
 }
+//
+//        int index = tblOrder.getSelectedRow();
+//        OrderAdd editor = new OrderAdd(this, ett.orders.get(index));
+//        editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+//        editor.setVisible(true);
