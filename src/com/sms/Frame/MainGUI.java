@@ -1,7 +1,7 @@
 package com.sms.Frame;
 
 import com.sms.FileIO.FileManager;
-import com.sms.FileIO.Helper;
+import com.sms.FileIO.Sort;
 import com.sms.Physical.Customer;
 import com.sms.Physical.Entity;
 import com.sms.Physical.Order;
@@ -81,10 +81,13 @@ public class MainGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sales Management Systemes");
+        setResizable(false);
 
+        mnFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/advanced.png"))); // NOI18N
         mnFile.setText("File");
 
-        btnOpenFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        btnOpenFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        btnOpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/folder.png"))); // NOI18N
         btnOpenFile.setText("Open File");
         btnOpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,6 +97,7 @@ public class MainGUI extends javax.swing.JFrame {
         mnFile.add(btnOpenFile);
 
         btnSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_add.png"))); // NOI18N
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,14 +108,22 @@ public class MainGUI extends javax.swing.JFrame {
         mnFile.add(jSeparator1);
 
         btnExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_close.png"))); // NOI18N
         btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
         mnFile.add(btnExit);
 
         jMenuBar1.add(mnFile);
 
+        mnManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/applications.png"))); // NOI18N
         mnManagement.setText("Manager");
 
         mnitProduct.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        mnitProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/Computer On_1.png"))); // NOI18N
         mnitProduct.setText("Production");
         mnitProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +133,7 @@ public class MainGUI extends javax.swing.JFrame {
         mnManagement.add(mnitProduct);
 
         mnitCustomer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        mnitCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/users_1.png"))); // NOI18N
         mnitCustomer.setText("Customer");
         mnitCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,6 +143,7 @@ public class MainGUI extends javax.swing.JFrame {
         mnManagement.add(mnitCustomer);
 
         mnitOrder.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        mnitOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/order.png"))); // NOI18N
         mnitOrder.setText("Order");
         mnitOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,11 +160,11 @@ public class MainGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
+            .addGap(0, 535, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+            .addGap(0, 283, Short.MAX_VALUE)
         );
 
         pack();
@@ -173,46 +187,6 @@ public class MainGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenFileActionPerformed
-        //Event Open File
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            
-            try {
-                entity = FileManager.LoadData(selectedFile.getAbsolutePath());
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            if(entity.customers == null)
-            {
-                entity.customers = new ArrayList<Customer>();
-            }else{
-                Helper.shuffleArray(entity.customers);
-            }
-            
-            if(entity.orders == null){
-                entity.orders = new ArrayList<Order>();
-            }else{
-                 Helper.shuffleArray(entity.orders);
-            }
-            
-            if(entity.products == null){
-                 entity.products = new ArrayList<Product>();
-                
-            }else{
-                 Helper.shuffleArray(entity.products);
-//                  entities.products = new ArrayList<Product>(entities.products.subList(0, 2));
-            }
-               
-            
-            JOptionPane.showMessageDialog(this,"Load Data Success");
-        }
-    }//GEN-LAST:event_btnOpenFileActionPerformed
-
     private void mnitProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitProductActionPerformed
         addNewPanel(new ProductionPanelManager(entity));
     }//GEN-LAST:event_mnitProductActionPerformed
@@ -229,6 +203,48 @@ public class MainGUI extends javax.swing.JFrame {
         }
         addNewPanel(new OrderPanelManager(entity));
     }//GEN-LAST:event_mnitOrderActionPerformed
+//Thoát Chương Trình
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenFileActionPerformed
+        //Event Open File
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            try {
+                entity = FileManager.LoadData(selectedFile.getAbsolutePath());
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if(entity.customers == null)
+            {
+                entity.customers = new ArrayList<Customer>();
+            }else{
+                Sort.shuffleArray(entity.customers);
+            }
+
+            if(entity.orders == null){
+                entity.orders = new ArrayList<Order>();
+            }else{
+                Sort.shuffleArray(entity.orders);
+            }
+
+            if(entity.products == null){
+                entity.products = new ArrayList<Product>();
+
+            }else{
+                Sort.shuffleArray(entity.products);
+            }
+
+            JOptionPane.showMessageDialog(this,"Load Data Success");
+        }
+    }//GEN-LAST:event_btnOpenFileActionPerformed
 
     private void addNewPanel(JPanel panelManager){
 

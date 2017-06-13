@@ -1,6 +1,6 @@
 package com.sms.Physical;
 
-import com.sms.FileIO.Helper;
+import com.sms.FileIO.Sort;
 import com.sms.EditType.CompareResult;
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ public class Product implements Comparable{
 
     @Override
     public int compareTo(Object other) {
-        return Helper.compareString(this.pcode, ((Product)other).pcode);
+        return Sort.compareString(this.pcode, ((Product)other).pcode);
     }
 
 

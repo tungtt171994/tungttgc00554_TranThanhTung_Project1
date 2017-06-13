@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class FileManager {
 
-//  Save file
+    //Save File Data
     public static void SaveData(String filePath,Entity entities) throws IOException{
         Gson gson = new Gson(); 
         BufferedWriter writer = null;
@@ -42,9 +42,10 @@ public class FileManager {
             }
         }
     }
-//  Open File
+    //Load File Data
     public static Entity LoadData(String filePath) throws FileNotFoundException{
         Gson gson = new Gson();
+        
         Entity result = gson.fromJson(new FileReader(filePath), Entity.class);
         return result;
     }

@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sms.Panel;
 
-import com.sms.FileIO.Helper;
+import com.sms.FileIO.Sort;
 import com.sms.Frame.OrderEdit;
 import com.sms.Physical.Customer;
 import com.sms.Physical.Entity;
@@ -13,56 +8,38 @@ import com.sms.Physical.Order;
 import com.sms.Physical.Product;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author anhle
- */
+
 public class OrderPanelManager extends javax.swing.JPanel {
 
-    public Entity entities;
+    public Entity ett;
     
     private String[] columns = new String [] {
                 "Product Code", "Customer Code", "Quantity"
             };
-    /**
-     * Creates new form OrderingPanelManager
-     */
-    public OrderPanelManager(Entity entities) {
+    
+    public OrderPanelManager(Entity entity) {
         initComponents();
         
-        this.entities = entities;
+        this.ett = entity;
         
-        loadDataToTable();
+        loadDataTab();
     }
     
-    public void loadDataToTable(){
+    public void loadDataTab(){
         
-        if(entities.orders.size() == 0)
+        if(ett.orders.size() == 0)
             return;
         
-        Object[][] arrData = new Object[entities.orders.size()][columns.length];
+        Object[][] arrData = new Object[ett.orders.size()][columns.length];
         
-        for(int i = 0 ;i < entities.orders.size();i++){
-
-            Order order = entities.orders.get(i);
-            try {
-                
-//                Product product = Helper.getProductByCode(entities.products, order.pcode);
-//                if(product != null)
-                    arrData[i][0] = order.pcode;
-
-//                Customer customer = Helper.getCustomerByCode(entities.customers, order.ccode);
-//                if(customer != null) 
-                    arrData[i][1] = order.ccode;
-
-                arrData[i][2] = order.quantity;
-
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
+        for(int i = 0 ;i < ett.orders.size();i++){
+            Order order = ett.orders.get(i);
+            arrData[i][0] = order.pcode;
+            arrData[i][1] = order.ccode;
+            arrData[i][2] = order.quantity;
         }
         
-         jTable1.setModel(new javax.swing.table.DefaultTableModel(
+         tblOrder.setModel(new javax.swing.table.DefaultTableModel(
             arrData,
             columns
         ) {
@@ -95,8 +72,11 @@ public class OrderPanelManager extends javax.swing.JPanel {
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblOrder = new javax.swing.JTable();
 
+        setToolTipText("");
+
+        btnSortBy_CCode_PCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/down_alt.png"))); // NOI18N
         btnSortBy_CCode_PCode.setText("Sort List Order");
         btnSortBy_CCode_PCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +84,7 @@ public class OrderPanelManager extends javax.swing.JPanel {
             }
         });
 
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_add.png"))); // NOI18N
         btnAdd.setText("Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +92,7 @@ public class OrderPanelManager extends javax.swing.JPanel {
             }
         });
 
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,7 +100,7 @@ public class OrderPanelManager extends javax.swing.JPanel {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -144,11 +126,12 @@ public class OrderPanelManager extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        tblOrder.setEditingRow(1);
+        jScrollPane1.setViewportView(tblOrder);
+        if (tblOrder.getColumnModel().getColumnCount() > 0) {
+            tblOrder.getColumnModel().getColumn(0).setResizable(false);
+            tblOrder.getColumnModel().getColumn(1).setResizable(false);
+            tblOrder.getColumnModel().getColumn(2).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -157,17 +140,15 @@ public class OrderPanelManager extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEdit)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSortBy_CCode_PCode))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(btnSortBy_CCode_PCode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,28 +159,29 @@ public class OrderPanelManager extends javax.swing.JPanel {
                     .addComponent(btnAdd)
                     .addComponent(btnSortBy_CCode_PCode))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        //Thêm mới 1 Order
         OrderEdit editor = new OrderEdit(this);
         editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editor.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
-
+    
     private void btnSortBy_CCode_PCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortBy_CCode_PCodeActionPerformed
-        Helper.quicksort(entities.orders);
-        loadDataToTable();
-        JOptionPane.showMessageDialog(this,"success");
+        //Sắp xếp List Order By PCode and CCode
+        Sort.quicksort(ett.orders);
+        loadDataTab();
+        JOptionPane.showMessageDialog(this,"Sorted Success");
     }//GEN-LAST:event_btnSortBy_CCode_PCodeActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
-        int index = jTable1.getSelectedRow();
-        OrderEdit editor = new OrderEdit(this, entities.orders.get(index));
+        //Xác nhận việc sửa.
+        int index = tblOrder.getSelectedRow();
+        OrderEdit editor = new OrderEdit(this, ett.orders.get(index));
         editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editor.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
@@ -210,6 +192,6 @@ public class OrderPanelManager extends javax.swing.JPanel {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSortBy_CCode_PCode;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblOrder;
     // End of variables declaration//GEN-END:variables
 }

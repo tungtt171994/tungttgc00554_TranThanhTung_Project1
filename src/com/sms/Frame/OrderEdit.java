@@ -1,6 +1,6 @@
 package com.sms.Frame;
 
-import com.sms.FileIO.Helper;
+import com.sms.FileIO.Sort;
 import com.sms.EditType.EditType;
 import com.sms.Physical.Customer;
 import com.sms.Physical.Order;
@@ -13,7 +13,7 @@ import javax.swing.JComboBox;
 public class OrderEdit extends javax.swing.JFrame {
 
     private EditType editType;
-    private Order orders;
+    private Order order;
     OrderPanelManager orderPanelManager;
     
     public OrderEdit(OrderPanelManager orderPanelManager) {
@@ -22,19 +22,19 @@ public class OrderEdit extends javax.swing.JFrame {
         editType = EditType.CREATE;
         this.orderPanelManager = orderPanelManager;
         
-        initDataAndFillComponent();
+        initData();
     }
 
-    public OrderEdit(OrderPanelManager orderingPanelManager, Order ordering) {
+    public OrderEdit(OrderPanelManager orderingPanelManager, Order order) {
         initComponents();
         
         
         editType = EditType.EDIT;
-        this.orders = ordering;
+        this.order = order;
 
         this.orderPanelManager = orderingPanelManager;
         
-        initDataAndFillComponent();
+        initData();
     }
 
     /**
@@ -56,13 +56,16 @@ public class OrderEdit extends javax.swing.JFrame {
         cbCustomer = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Order Edit");
         setAlwaysOnTop(true);
+        setResizable(false);
 
         lbQuantity.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbQuantity.setText("Quantity");
 
-        jLabel1.setText("Ordering Editor");
+        jLabel1.setText("Order Edit");
 
+        btEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_ok.png"))); // NOI18N
         btEdit.setText("Save");
         btEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +80,11 @@ public class OrderEdit extends javax.swing.JFrame {
         lbProduct.setText("Product");
 
         cbProduct.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbProductActionPerformed(evt);
+            }
+        });
 
         cbCustomer.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -85,59 +93,71 @@ public class OrderEdit extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btEdit)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbCustomer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(lbProduct, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lbCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtQuantity)
-                            .addComponent(cbCustomer, 0, 180, Short.MAX_VALUE)
-                            .addComponent(cbProduct, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btEdit)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbCustomer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(41, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(102, 102, 102))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbProduct))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbCustomer)
                     .addComponent(cbCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbQuantity)
-                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbQuantity))
+                .addGap(18, 18, 18)
                 .addComponent(btEdit)
-                .addGap(7, 7, 7))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
         
-        orders.pcode = orderPanelManager.entities.products.get(cbProduct.getSelectedIndex()).pcode;
-        orders.ccode = orderPanelManager.entities.customers.get(cbCustomer.getSelectedIndex()).ccode;
-        orders.quantity = Integer.parseInt(txtQuantity.getText());
-//
+        order.pcode = orderPanelManager.ett.products.get(cbProduct.getSelectedIndex()).pcode;
+        order.ccode = orderPanelManager.ett.customers.get(cbCustomer.getSelectedIndex()).ccode;
+        order.quantity = Integer.parseInt(txtQuantity.getText());
+        
         if(editType == EditType.CREATE){
-            orderPanelManager.entities.orders.add(orders);
+            orderPanelManager.ett.orders.add(order);
         }
         this.dispose();
-        orderPanelManager.loadDataToTable();
+        orderPanelManager.loadDataTab();
     }//GEN-LAST:event_btEditActionPerformed
+
+    private void cbProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProductActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbProductActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEdit;
@@ -150,38 +170,38 @@ public class OrderEdit extends javax.swing.JFrame {
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 
-    private void initDataAndFillComponent() {
+    private void initData() {
         
-        String[] arrProductName = new String[orderPanelManager.entities.products.size()];
-        for (int i = 0; i < orderPanelManager.entities.products.size(); i++) {
-            arrProductName[i] = orderPanelManager.entities.products.get(i).pro_name;
+        String[] arrProductName = new String[orderPanelManager.ett.products.size()];
+        for (int i = 0; i < orderPanelManager.ett.products.size(); i++) {
+            arrProductName[i] = orderPanelManager.ett.products.get(i).pro_name;
         }
         cbProduct.setModel(new DefaultComboBoxModel<String>(arrProductName));
        
-        String[] arrCustomerName = new String[orderPanelManager.entities.customers.size()];
-        for (int i = 0; i < orderPanelManager.entities.customers.size(); i++) {
-            arrCustomerName[i] = orderPanelManager.entities.customers.get(i).cus_name;
+        String[] arrCustomerName = new String[orderPanelManager.ett.customers.size()];
+        for (int i = 0; i < orderPanelManager.ett.customers.size(); i++) {
+            arrCustomerName[i] = orderPanelManager.ett.customers.get(i).cus_name;
         }
         cbCustomer.setModel(new DefaultComboBoxModel<String>(arrCustomerName));    
         
         
          if(editType == EditType.CREATE){
-            orders = new Order();
+            order = new Order();
             
-            if((orderPanelManager.entities.products.size()) > 0)
+            if((orderPanelManager.ett.products.size()) > 0)
                 cbProduct.setSelectedIndex(0);
             
-            if((orderPanelManager.entities.customers.size()) > 0)
+            if((orderPanelManager.ett.customers.size()) > 0)
                 cbCustomer.setSelectedIndex(0);
             
         }else{
              
-             cbProduct.setSelectedIndex(Helper.getIndexProductByCode(orderPanelManager.entities.products, orders.pcode));
-             cbCustomer.setSelectedIndex(Helper.getIndexCustomerByCode(orderPanelManager.entities.customers, orders.ccode));
+             cbProduct.setSelectedIndex(Sort.getIndexProductByCode(orderPanelManager.ett.products, order.pcode));
+             cbCustomer.setSelectedIndex(Sort.getIndexCustomerByCode(orderPanelManager.ett.customers, order.ccode));
              
          }
         
 
-        txtQuantity.setText(""+orders.quantity);
+        txtQuantity.setText(""+order.quantity);
     }
 }

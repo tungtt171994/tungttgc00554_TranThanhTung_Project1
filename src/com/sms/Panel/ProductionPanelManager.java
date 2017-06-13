@@ -1,10 +1,10 @@
-
 package com.sms.Panel;
 
-import com.sms.FileIO.Helper;
+import com.sms.FileIO.Sort;
 import com.sms.Frame.ProductEdit;
 import com.sms.Physical.Entity;
 import com.sms.Physical.Product;
+import java.awt.Rectangle;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -16,11 +16,7 @@ public class ProductionPanelManager extends javax.swing.JPanel {
     private String[] columns = new String [] {
                 "Code", "Name", "Quantity", "Saled", "Price"
             };
-    
-//    private String[] columns = new String[]{}
-    /**
-     * Creates new form ProductionPanelManager
-     */
+
     public ProductionPanelManager(Entity entity) {
         initComponents();
         this.ett = entity;
@@ -43,7 +39,7 @@ public class ProductionPanelManager extends javax.swing.JPanel {
             arrData[i][4] = product.price;
         }
         
-        jTable1.setModel(new DefaultTableModel(
+        tblProduct.setModel(new DefaultTableModel(
             arrData,columns
         ) {
             Class[] types = new Class [] {
@@ -79,14 +75,16 @@ public class ProductionPanelManager extends javax.swing.JPanel {
         txtSreachByCcode = new javax.swing.JTextField();
         btnSortby_PCode = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProduct = new javax.swing.JTable();
 
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 formFocusLost(evt);
             }
         });
 
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_add.png"))); // NOI18N
         btnAdd.setText("Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,6 +92,7 @@ public class ProductionPanelManager extends javax.swing.JPanel {
             }
         });
 
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +100,7 @@ public class ProductionPanelManager extends javax.swing.JPanel {
             }
         });
 
+        btnSearchBy_Pcode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_search.png"))); // NOI18N
         btnSearchBy_Pcode.setText("Sreach Product");
         btnSearchBy_Pcode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +108,7 @@ public class ProductionPanelManager extends javax.swing.JPanel {
             }
         });
 
+        btnRemoveByPCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/erase.png"))); // NOI18N
         btnRemoveByPCode.setText("Delete Product");
         btnRemoveByPCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,14 +122,15 @@ public class ProductionPanelManager extends javax.swing.JPanel {
             }
         });
 
-        btnSortby_PCode.setText("Sort Product");
+        btnSortby_PCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/down_alt.png"))); // NOI18N
+        btnSortby_PCode.setText("Sort List Product");
         btnSortby_PCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSortby_PCodeActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -154,18 +156,19 @@ public class ProductionPanelManager extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("Code");
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("Name");
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("Quantity");
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setHeaderValue("Saled");
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setHeaderValue("Price");
+        tblProduct.setEditingRow(1);
+        jScrollPane1.setViewportView(tblProduct);
+        if (tblProduct.getColumnModel().getColumnCount() > 0) {
+            tblProduct.getColumnModel().getColumn(0).setResizable(false);
+            tblProduct.getColumnModel().getColumn(0).setHeaderValue("Code");
+            tblProduct.getColumnModel().getColumn(1).setResizable(false);
+            tblProduct.getColumnModel().getColumn(1).setHeaderValue("Name");
+            tblProduct.getColumnModel().getColumn(2).setResizable(false);
+            tblProduct.getColumnModel().getColumn(2).setHeaderValue("Quantity");
+            tblProduct.getColumnModel().getColumn(3).setResizable(false);
+            tblProduct.getColumnModel().getColumn(3).setHeaderValue("Saled");
+            tblProduct.getColumnModel().getColumn(4).setResizable(false);
+            tblProduct.getColumnModel().getColumn(4).setHeaderValue("Price");
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -175,22 +178,23 @@ public class ProductionPanelManager extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSortby_PCode, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAdd)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEdit)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSortby_PCode))
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtSreachByCcode, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSearchBy_Pcode, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRemoveByPCode)))
-                        .addGap(0, 4, Short.MAX_VALUE)))
+                                .addComponent(txtSreachByCcode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSearchBy_Pcode, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnRemoveByPCode, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -213,14 +217,14 @@ public class ProductionPanelManager extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        //Thêm mới 1 product
         ProductEdit editor = new ProductEdit(this);
         editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editor.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void txtSreachByCcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSreachByCcodeActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtSreachByCcodeActionPerformed
 
     private void formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusLost
@@ -228,42 +232,48 @@ public class ProductionPanelManager extends javax.swing.JPanel {
     }//GEN-LAST:event_formFocusLost
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-
-        int index = jTable1.getSelectedRow();
+        //Sửa thông tin product
+        int index = tblProduct.getSelectedRow();
         ProductEdit editor = new ProductEdit(this, ett.products.get(index));
         editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editor.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnSortby_PCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortby_PCodeActionPerformed
-        // TODO add your handling code here:
-        Helper.quicksort(ett.products);
+        //Sort Product By pcode a->z
+        Sort.quicksort(ett.products);
         loadDataTab();
         JOptionPane.showMessageDialog(this,"Sorted Product");
     }//GEN-LAST:event_btnSortby_PCodeActionPerformed
 
     private void btnSearchBy_PcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchBy_PcodeActionPerformed
+        //Search Product By pcode
+        Sort.quicksort(ett.products);
+        loadDataTab();
         String code = txtSreachByCcode.getText();
-        int result = Helper.binarysreach(ett.products, new Product(code));
+        int result = Sort.binarysreach(ett.products, new Product(code));
          if(result != -1){
-            jTable1.getSelectionModel().setSelectionInterval(0, result);
-            JOptionPane.showMessageDialog(this,"Found Product");
+            tblProduct.getSelectionModel().setSelectionInterval(result, result);
+            tblProduct.scrollRectToVisible(new Rectangle(tblProduct.getCellRect(result, 0, true)));
+            JOptionPane.showMessageDialog(this,"Product Found");
         }else{
             JOptionPane.showMessageDialog(this,"Product Not Found");
         }
     }//GEN-LAST:event_btnSearchBy_PcodeActionPerformed
 
     private void btnRemoveByPCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveByPCodeActionPerformed
-        // TODO add your handling code here:
-        
+        //Remove Product By pcode
+        Sort.quicksort(ett.products);
+        loadDataTab();
         String code = txtSreachByCcode.getText();
-        int result = Helper.binarysreach(ett.products, new Product(code));
+        int result = Sort.binarysreach(ett.products, new Product(code));
         if(result != -1){
             ett.products.remove(result);
-            JOptionPane.showMessageDialog(this,"Remove Success");
+            JOptionPane.showMessageDialog(this,"Removed Success");
         }else{
             JOptionPane.showMessageDialog(this,"Product Not Exist");
         }
+        loadDataTab();
     }//GEN-LAST:event_btnRemoveByPCodeActionPerformed
 
 
@@ -274,7 +284,7 @@ public class ProductionPanelManager extends javax.swing.JPanel {
     private javax.swing.JButton btnSearchBy_Pcode;
     private javax.swing.JButton btnSortby_PCode;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblProduct;
     private javax.swing.JTextField txtSreachByCcode;
     // End of variables declaration//GEN-END:variables
 }

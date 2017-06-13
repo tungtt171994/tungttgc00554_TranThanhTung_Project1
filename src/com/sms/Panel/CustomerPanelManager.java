@@ -1,15 +1,16 @@
 package com.sms.Panel;
 
-import com.sms.FileIO.Helper;
+import com.sms.FileIO.Sort;
 import com.sms.Frame.CustomerEdit;
 import com.sms.Physical.Customer;
 import com.sms.Physical.Entity;
 import com.sms.Physical.Product;
+import java.awt.Rectangle;
 import javax.swing.JOptionPane;
 
 public class CustomerPanelManager extends javax.swing.JPanel {
 
-    public Entity entities;
+    public Entity ett;
     
     private String[] columns =  new String [] {
                 "Code", "Name", "Phone"
@@ -17,25 +18,25 @@ public class CustomerPanelManager extends javax.swing.JPanel {
     
     public CustomerPanelManager(Entity entities) {
         initComponents();
-        this.entities = entities;
+        this.ett = entities;
         loadDataTab();
     }
-    
+    //This function get Data to Table
     public void loadDataTab() {
         
-        if(entities.customers.size() == 0)
+        if(ett.customers.size() == 0)
             return;
         
-        Object[][] arrData = new Object[entities.customers.size()][columns.length];
+        Object[][] arrData = new Object[ett.customers.size()][columns.length];
         
-        for(int i = 0 ;i < entities.customers.size();i++){
-            Customer product = entities.customers.get(i);
+        for(int i = 0 ;i < ett.customers.size();i++){
+            Customer product = ett.customers.get(i);
             arrData[i][0] = product.ccode;
             arrData[i][1] = product.cus_name;
             arrData[i][2] = product.phone;
         }
         
-         jTable1.setModel(new javax.swing.table.DefaultTableModel(
+         tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             arrData,
            columns
         ) {
@@ -71,9 +72,10 @@ public class CustomerPanelManager extends javax.swing.JPanel {
         btnSearch_By_CCode = new javax.swing.JButton();
         btnRemove_By_Ccode = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCustomer = new javax.swing.JTable();
         btnSort = new javax.swing.JButton();
 
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_add.png"))); // NOI18N
         btnAdd.setText("Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +83,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
             }
         });
 
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/edit.png"))); // NOI18N
         btnEdit.setText("Edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,6 +97,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
             }
         });
 
+        btnSearch_By_CCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/s_search.png"))); // NOI18N
         btnSearch_By_CCode.setText("Search Customer");
         btnSearch_By_CCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +105,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
             }
         });
 
+        btnRemove_By_Ccode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/erase.png"))); // NOI18N
         btnRemove_By_Ccode.setText("Delete Customer");
         btnRemove_By_Ccode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +113,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -134,13 +139,16 @@ public class CustomerPanelManager extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        tblCustomer.setEditingRow(1);
+        tblCustomer.setName(""); // NOI18N
+        jScrollPane1.setViewportView(tblCustomer);
+        if (tblCustomer.getColumnModel().getColumnCount() > 0) {
+            tblCustomer.getColumnModel().getColumn(0).setResizable(false);
+            tblCustomer.getColumnModel().getColumn(1).setResizable(false);
+            tblCustomer.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        btnSort.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icon/down_alt.png"))); // NOI18N
         btnSort.setText("Sort List Customer");
         btnSort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,23 +164,19 @@ public class CustomerPanelManager extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEdit)
-                        .addGap(176, 176, 176)
-                        .addComponent(btnSort, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addComponent(txtSreachByCcode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSearch_By_CCode, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(btnRemove_By_Ccode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtSreachByCcode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSearch_By_CCode)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRemove_By_Ccode)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSort)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,53 +195,67 @@ public class CustomerPanelManager extends javax.swing.JPanel {
                     .addComponent(btnRemove_By_Ccode))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        getAccessibleContext().setAccessibleParent(jScrollPane1);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        //Add new Customer
         CustomerEdit editor = new CustomerEdit(this);
         editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editor.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void txtSreachByCcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSreachByCcodeActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtSreachByCcodeActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
-        int index = jTable1.getSelectedRow();
-        CustomerEdit editor = new CustomerEdit(this, entities.customers.get(index));
+        //Edit Details Customer
+        int index = tblCustomer.getSelectedRow();        
+        CustomerEdit editor = new CustomerEdit(this, ett.customers.get(index));
         editor.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editor.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
-        Helper.quicksort(entities.products);
+        //Sort List Customer
+        Sort.quicksort(ett.customers);
         loadDataTab();
         JOptionPane.showMessageDialog(this,"Sorted Success");
     }//GEN-LAST:event_btnSortActionPerformed
 
+    
+    
     private void btnSearch_By_CCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch_By_CCodeActionPerformed
-        // TODO add your handling code here:
-        
+        //Search Customer by ccode
+        Sort.quicksort(ett.customers);
+        loadDataTab();
         String code = txtSreachByCcode.getText();
-        int result = Helper.binarysreach(entities.customers, new Customer(code));
-        if(result != -1){
-             jTable1.getSelectionModel().setSelectionInterval(0, result);
-            JOptionPane.showMessageDialog(this,"Found");
-        }else{
-            JOptionPane.showMessageDialog(this,"Customer Not Found");
+        int result = Sort.binarysreach(ett.customers, new Customer(code));
+        if(result != -1)
+        {
+             tblCustomer.getSelectionModel().setSelectionInterval(result, result);
+             tblCustomer.scrollRectToVisible(new Rectangle(tblCustomer.getCellRect(result, 0, true)));
+            JOptionPane.showMessageDialog(this,"Customer Found");
+        }else
+        {
+            JOptionPane.showMessageDialog(this,"Customer Not Exist");
         }
     }//GEN-LAST:event_btnSearch_By_CCodeActionPerformed
 
     private void btnRemove_By_CcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemove_By_CcodeActionPerformed
-       String code = txtSreachByCcode.getText();
-        int result = Helper.binarysreach(entities.customers, new Customer(code));
-        if(result != -1){
-            entities.customers.remove(result);
-            JOptionPane.showMessageDialog(this,"Remove Success");
-        }else{
+        //Remove Customer by ccode
+        Sort.quicksort(ett.customers);
+        loadDataTab();
+        String code = txtSreachByCcode.getText();
+        int result = Sort.binarysreach(ett.customers, new Customer(code));
+        if(result != -1)
+        {
+            ett.customers.remove(result);
+            JOptionPane.showMessageDialog(this,"Removed Success");
+        }else
+        {
             JOptionPane.showMessageDialog(this,"Customer Not Exist");
         }
     }//GEN-LAST:event_btnRemove_By_CcodeActionPerformed
@@ -250,7 +268,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
     private javax.swing.JButton btnSearch_By_CCode;
     private javax.swing.JButton btnSort;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblCustomer;
     private javax.swing.JTextField txtSreachByCcode;
     // End of variables declaration//GEN-END:variables
 

@@ -1,6 +1,6 @@
 package com.sms.Physical;
 
-import com.sms.FileIO.Helper;
+import com.sms.FileIO.Sort;
 import com.sms.EditType.CompareResult;
 import java.io.Serializable;
 import java.util.UUID;
@@ -20,11 +20,10 @@ public class Customer implements Comparable<Object>{
     }
     
     public Customer(){
-//        this.ccode = Helper.getCode();
     }
 
     @Override
     public int compareTo(Object other) {
-         return Helper.compareString(this.ccode, ((Customer)other).ccode);
+         return Sort.compareString(this.ccode, ((Customer)other).ccode);
     }
 }

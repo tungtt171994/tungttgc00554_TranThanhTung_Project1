@@ -1,6 +1,6 @@
 package com.sms.Physical;
 
-import com.sms.FileIO.Helper;
+import com.sms.FileIO.Sort;
 import com.sms.EditType.CompareResult;
 import java.io.Serializable;
 import java.util.UUID;
@@ -14,7 +14,6 @@ public class Order implements Comparable<Object> {
     public String pcode;
     public String ccode;
     public Integer quantity;
-    public String pro_image_url;
 
     public Order(){
         
@@ -27,7 +26,7 @@ public class Order implements Comparable<Object> {
     @Override
     public int compareTo(Object other) {
         Order orderOther = (Order)other;
-        return Helper.compareString(this.getCombineCode(), orderOther.getCombineCode());
+        return Sort.compareString(this.getCombineCode(), orderOther.getCombineCode());
     }
 
 }

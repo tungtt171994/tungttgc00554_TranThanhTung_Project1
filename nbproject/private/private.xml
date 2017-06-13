@@ -2,6 +2,21 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/FileIO/FileManager.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/Frame/MainGUI.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/FileIO/Res.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/FileIO/Sort.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/Frame/CustomerEdit.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/Physical/Customer.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/EditType/CompareResult.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/Panel/OrderPanelManager.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/Physical/Entity.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/EditType/EditType.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/Panel/ProductionPanelManager.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/Frame/ProductEdit.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/Panel/CustomerPanelManager.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_Tran_Thanh_Tung_Project1/src/com/sms/Frame/OrderEdit.java</file>
+        </group>
     </open-files>
 </project-private>
