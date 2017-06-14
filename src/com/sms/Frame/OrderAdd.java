@@ -56,7 +56,7 @@ public class OrderAdd extends javax.swing.JFrame {
         cbCustomer = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Order Edit");
+        setTitle("Add New Order");
         setAlwaysOnTop(true);
         setResizable(false);
 

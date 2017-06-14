@@ -97,7 +97,7 @@ public class OrderPanelManager extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrder = new javax.swing.JTable();
         btnSave = new javax.swing.JButton();
-        btnOpen = new javax.swing.JButton();
+        btnLoadData = new javax.swing.JButton();
 
         setToolTipText("");
 
@@ -161,11 +161,11 @@ public class OrderPanelManager extends javax.swing.JPanel {
             }
         });
 
-        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/folder.png"))); // NOI18N
-        btnOpen.setText("Open Data");
-        btnOpen.addActionListener(new java.awt.event.ActionListener() {
+        btnLoadData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/folder.png"))); // NOI18N
+        btnLoadData.setText("Load Data");
+        btnLoadData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpenActionPerformed(evt);
+                btnLoadDataActionPerformed(evt);
             }
         });
 
@@ -178,7 +178,7 @@ public class OrderPanelManager extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLoadData, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -195,7 +195,7 @@ public class OrderPanelManager extends javax.swing.JPanel {
                     .addComponent(btnAddOrder)
                     .addComponent(btnSortBy_CCode_PCode)
                     .addComponent(btnSave)
-                    .addComponent(btnOpen))
+                    .addComponent(btnLoadData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                 .addContainerGap())
@@ -231,7 +231,7 @@ public class OrderPanelManager extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
+    private void btnLoadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDataActionPerformed
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -259,12 +259,12 @@ public class OrderPanelManager extends javax.swing.JPanel {
 //        } catch (Exception ex) {
 //            Logger.getLogger(OrderPanelManager.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-    }//GEN-LAST:event_btnOpenActionPerformed
+    }//GEN-LAST:event_btnLoadDataActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddOrder;
-    private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnLoadData;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSortBy_CCode_PCode;
     private javax.swing.JScrollPane jScrollPane1;

@@ -69,7 +69,7 @@ public class ProductAdd extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Product Edit");
+        setTitle("Add New Product");
         setAlwaysOnTop(true);
         setResizable(false);
 

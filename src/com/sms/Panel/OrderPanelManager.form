@@ -24,7 +24,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="btnOpen" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="btnLoadData" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnSave" min="-2" pref="120" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -45,7 +45,7 @@
                   <Component id="btnAddOrder" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSortBy_CCode_PCode" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSave" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnOpen" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnLoadData" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="177" max="32767" attributes="0"/>
@@ -137,15 +137,15 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnOpen">
+    <Component class="javax.swing.JButton" name="btnLoadData">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/com/sms/icon/folder.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Open Data"/>
+        <Property name="text" type="java.lang.String" value="Load Data"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpenActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoadDataActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

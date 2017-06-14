@@ -106,7 +106,7 @@ public class ProductPanelManager extends javax.swing.JPanel {
         btnSortby_PCode = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
-        btnOpen = new javax.swing.JButton();
+        btnLoadData = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -192,11 +192,11 @@ public class ProductPanelManager extends javax.swing.JPanel {
             tblProduct.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/folder.png"))); // NOI18N
-        btnOpen.setText("Open Data");
-        btnOpen.addActionListener(new java.awt.event.ActionListener() {
+        btnLoadData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/folder.png"))); // NOI18N
+        btnLoadData.setText("Load Data");
+        btnLoadData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpenActionPerformed(evt);
+                btnLoadDataActionPerformed(evt);
             }
         });
 
@@ -217,7 +217,7 @@ public class ProductPanelManager extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLoadData, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -239,7 +239,7 @@ public class ProductPanelManager extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnSortby_PCode)
-                    .addComponent(btnOpen)
+                    .addComponent(btnLoadData)
                     .addComponent(btnSave))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,7 +279,7 @@ public class ProductPanelManager extends javax.swing.JPanel {
         Sort.quicksort(ett.products);
         loadDataTab();
         String code = txtSreachByCcode.getText();
-        int result = Sort.binarysreach(ett.products, new Product(code));
+        int result = Sort.binarySearch(ett.products, new Product(code));
          if(result != -1){
             tblProduct.getSelectionModel().setSelectionInterval(result, result);
             tblProduct.scrollRectToVisible(new Rectangle(tblProduct.getCellRect(result, 0, true)));
@@ -295,7 +295,7 @@ public class ProductPanelManager extends javax.swing.JPanel {
         loadDataTab();
         int index = tblProduct.getSelectedRow();
         String code = txtSreachByCcode.getText();
-        int result = Sort.binarysreach(ett.products, new Product(code));
+        int result = Sort.binarySearch(ett.products, new Product(code));
         if(result != -1){
             ett.products.remove(result);
             JOptionPane.showMessageDialog(this,"Removed Success");
@@ -320,7 +320,7 @@ public class ProductPanelManager extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
+    private void btnLoadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDataActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int result = fileChooser.showOpenDialog(this);
@@ -336,14 +336,14 @@ public class ProductPanelManager extends javax.swing.JPanel {
                ett.products = new ArrayList<Product>();
            }
            loadDataTab();
-            JOptionPane.showMessageDialog(this,"Open Data Product Success");
+            JOptionPane.showMessageDialog(this,"Load Data Product Success");
         }
-    }//GEN-LAST:event_btnOpenActionPerformed
+    }//GEN-LAST:event_btnLoadDataActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnLoadData;
     private javax.swing.JButton btnRemoveByPCode;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearchBy_Pcode;

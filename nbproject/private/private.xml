@@ -2,6 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/com/sms/Frame/CustomerAdd.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/com/sms/FileIO/FileManager.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/com/sms/Frame/ProductAdd.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/readfiles_abs/DataAccessJson.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/com/sms/Frame/OrderAdd.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/com/sms/Panel/CustomerPanelManager.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/readfiles_abs/to_test_DAO.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/com/sms/Frame/MainGUI.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/readfiles_abs/DataAccess.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/com/sms/FileIO/Sort.java</file>
+            <file>file:/C:/Users/ThanhTung/Desktop/assignment-data-structure-1-master/tungttgc00554_TranThanhTung_Project1/src/com/sms/Physical/Entity.java</file>
+        </group>
     </open-files>
 </project-private>

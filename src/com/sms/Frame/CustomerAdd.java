@@ -64,7 +64,7 @@ public class CustomerAdd extends javax.swing.JFrame {
         txtCode = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Customer Edit");
+        setTitle("Add New Customer");
         setAlwaysOnTop(true);
 
         jLabel1.setText("Add New Customer");

@@ -117,7 +117,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCustomer = new javax.swing.JTable();
         btnSort = new javax.swing.JButton();
-        btnOpen = new javax.swing.JButton();
+        btnLoadData = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/s_add.png"))); // NOI18N
@@ -195,11 +195,11 @@ public class CustomerPanelManager extends javax.swing.JPanel {
             }
         });
 
-        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/folder.png"))); // NOI18N
-        btnOpen.setText("Open Data");
-        btnOpen.addActionListener(new java.awt.event.ActionListener() {
+        btnLoadData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sms/icon/folder.png"))); // NOI18N
+        btnLoadData.setText("Load Data");
+        btnLoadData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpenActionPerformed(evt);
+                btnLoadDataActionPerformed(evt);
             }
         });
 
@@ -226,7 +226,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
                         .addComponent(btnRemove_By_Ccode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnOpen, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                        .addComponent(btnLoadData, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -242,7 +242,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnSort)
-                    .addComponent(btnOpen)
+                    .addComponent(btnLoadData)
                     .addComponent(btnSave))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,7 +282,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
         Sort.quicksort(ett.customers);
         loadDataTab();
         String code = txtSreachByCcode.getText();
-        int result = Sort.binarysreach(ett.customers, new Customer(code));
+        int result = Sort.binarySearch(ett.customers, new Customer(code));
         if(result != -1)
         {
              tblCustomer.getSelectionModel().setSelectionInterval(result, result);
@@ -299,7 +299,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
         Sort.quicksort(ett.customers);
         loadDataTab();
         String code = txtSreachByCcode.getText();
-        int result = Sort.binarysreach(ett.customers, new Customer(code));
+        int result = Sort.binarySearch(ett.customers, new Customer(code));
         if(result != -1)
         {
             ett.customers.remove(result);
@@ -310,7 +310,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnRemove_By_CcodeActionPerformed
 
-    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
+    private void btnLoadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDataActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int result = fileChooser.showOpenDialog(this);
@@ -326,9 +326,9 @@ public class CustomerPanelManager extends javax.swing.JPanel {
                ett.customers = new ArrayList<Customer>();
            }
            loadDataTab();
-            JOptionPane.showMessageDialog(this,"Open Data Customer Success");
+            JOptionPane.showMessageDialog(this,"Load Data Customer Success");
         }
-    }//GEN-LAST:event_btnOpenActionPerformed
+    }//GEN-LAST:event_btnLoadDataActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         JFileChooser fileChooser = new JFileChooser();
@@ -348,7 +348,7 @@ public class CustomerPanelManager extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnLoadData;
     private javax.swing.JButton btnRemove_By_Ccode;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch_By_CCode;

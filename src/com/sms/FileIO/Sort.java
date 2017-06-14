@@ -54,7 +54,7 @@ public class Sort {
         return left;
     }
     
-    public static <T> int binarysreach(ArrayList<T> array, T fakeDataWithCode)
+    public static <T> int binarySearch(ArrayList<T> array, T fakeDataWithCode)
     {
         return realBinarysreach(array,fakeDataWithCode,0,array.size());
     }
@@ -101,7 +101,7 @@ public class Sort {
         array.set(i, array.get(change));
         array.set(change, cacheData);
     }
-    //So sánh bảng sửa và tạo mới
+    //Compare String in table
     public  static int compareString(String a, String b){
         int result = a.compareTo(b);
         if(result > 0){
@@ -114,7 +114,7 @@ public class Sort {
     }
     
     public static Customer getCustomerByCode(ArrayList<Customer> customers,String code){
-        int result = Sort.binarysreach(customers,new Customer(code));
+        int result = Sort.binarySearch(customers,new Customer(code));
         
         if(result == -1) return null;
         
@@ -123,13 +123,13 @@ public class Sort {
     }
     
     public static int getIndexCustomerByCode(ArrayList<Customer> customers,String code){
-        int result = Sort.binarysreach(customers,new Customer(code));
+        int result = Sort.binarySearch(customers,new Customer(code));
         
         return result;
     }
     
     public static Product getProductByCode(ArrayList<Product> products,String code){
-        int result = Sort.binarysreach(products,new Product(code));
+        int result = Sort.binarySearch(products,new Product(code));
         
         if(result == -1) return null;
         
@@ -138,7 +138,7 @@ public class Sort {
     }
     
     public static int getIndexProductByCode(ArrayList<Product> products,String code){
-        int result = Sort.binarysreach(products,new Product(code));
+        int result = Sort.binarySearch(products,new Product(code));
         
         return result;
     }
